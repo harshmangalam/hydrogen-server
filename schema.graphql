@@ -29,4 +29,25 @@ enum PostAudienceEnum {
 
 type Query {
   posts: [Post]!
+  users: [User]!
+}
+
+type User {
+  coverImage: String
+  createdAt: String!
+  email: String!
+  firstName: String!
+  id: ID!
+  isActive: Boolean!
+  isEmailVerified: Boolean!
+  lastName: String
+  profileImage: String
+  role: UserRole!
+  updatedAt: String!
+}
+
+"""Resource access rules"""
+enum UserRole {
+  ADMIN
+  USER
 }

@@ -18,6 +18,7 @@ export interface NexusGenInputs {
 
 export interface NexusGenEnums {
   PostAudienceEnum: "FRIENDS" | "ONLY_ME" | "PUBLIC" | "SPECIFIC"
+  UserRole: "ADMIN" | "USER"
 }
 
 export interface NexusGenScalars {
@@ -43,6 +44,19 @@ export interface NexusGenObjects {
     updatedAt: string; // String!
   }
   Query: {};
+  User: { // root type
+    coverImage?: string | null; // String
+    createdAt: string; // String!
+    email: string; // String!
+    firstName: string; // String!
+    id: string; // ID!
+    isActive: boolean; // Boolean!
+    isEmailVerified: boolean; // Boolean!
+    lastName?: string | null; // String
+    profileImage?: string | null; // String
+    role: NexusGenEnums['UserRole']; // UserRole!
+    updatedAt: string; // String!
+  }
 }
 
 export interface NexusGenInterfaces {
@@ -73,6 +87,20 @@ export interface NexusGenFieldTypes {
   }
   Query: { // field return type
     posts: Array<NexusGenRootTypes['Post'] | null>; // [Post]!
+    users: Array<NexusGenRootTypes['User'] | null>; // [User]!
+  }
+  User: { // field return type
+    coverImage: string | null; // String
+    createdAt: string; // String!
+    email: string; // String!
+    firstName: string; // String!
+    id: string; // ID!
+    isActive: boolean; // Boolean!
+    isEmailVerified: boolean; // Boolean!
+    lastName: string | null; // String
+    profileImage: string | null; // String
+    role: NexusGenEnums['UserRole']; // UserRole!
+    updatedAt: string; // String!
   }
 }
 
@@ -94,6 +122,20 @@ export interface NexusGenFieldTypeNames {
   }
   Query: { // field return type name
     posts: 'Post'
+    users: 'User'
+  }
+  User: { // field return type name
+    coverImage: 'String'
+    createdAt: 'String'
+    email: 'String'
+    firstName: 'String'
+    id: 'ID'
+    isActive: 'Boolean'
+    isEmailVerified: 'Boolean'
+    lastName: 'String'
+    profileImage: 'String'
+    role: 'UserRole'
+    updatedAt: 'String'
   }
 }
 
