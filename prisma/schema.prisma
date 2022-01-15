@@ -1,0 +1,52 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                      String   @id @default(uuid())
+  firstName               String
+  lastName                String?
+  email                   String
+  password                String
+  coverImage              String?
+  profileImage            String?
+  isActive                Boolean  @default(false)
+  isEmailVerified         Boolean  @default(false)
+  createdAt               DateTime @default(now())
+  updatedAt               DateTime @updatedAt
+  taggedInPosts           Post[]   @relation("_UsersPostsTag")
+  specificAudienceInPosts Post[]   @relation("_UsersPostsSpecificAudience")
+  posts                   Post[]
+}
+
+model Post {
+  id                      String           @id @default(uuid())
+  title                   String
+  content                 String?
+  audience                PostAudienceEnum @default(PUBLIC)
+  author                  User             @relation(fields: [authorId], references: [id])
+  authorId                String
+  media                   String[]
+  feeling                 String?
+  checkIn                 String?
+  gif                     String?
+  taggedFriends           User[]           @relation("_UsersPostsTag")
+  specificAudienceFriends User[]           @relation("_UsersPostsSpecificAudience")
+  createdAt               DateTime         @default(now())
+  updatedAt               DateTime         @updatedAt
+}
+
+enum PostAudienceEnum {
+  PUBLIC
+  FRIENDS
+  ONLY_ME
+  SPECIFIC
+}
