@@ -3,14 +3,28 @@
 
 
 type Mutation {
-  createPost(body: String!, title: String!): Post!
+  createPost(audience: PostAudienceEnum!, checkIn: String, content: String, feeling: String, gif: String, title: String!): Post!
 }
 
 type Post {
-  body: String
-  id: ID
-  published: Boolean
-  title: String
+  audience: PostAudienceEnum!
+  checkIn: String
+  content: String
+  createdAt: String!
+  feeling: String
+  gif: String
+  id: ID!
+  media: [String]!
+  title: String!
+  updatedAt: String!
+}
+
+"""Who can see your post"""
+enum PostAudienceEnum {
+  FRIENDS
+  ONLY_ME
+  PUBLIC
+  SPECIFIC
 }
 
 type Query {

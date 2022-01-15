@@ -1,11 +1,20 @@
-import { extendType, nonNull, objectType, stringArg } from "nexus";
+import { enumType, extendType, nonNull, objectType, stringArg } from "nexus";
+import { Context } from "../context";
 export const Post = objectType({
   name: "Post",
   definition(t) {
-    t.id("id");
-    t.string("title");
-    t.string("body");
-    t.boolean("published");
+    t.nonNull.id("id");
+    t.nonNull.string("title");
+    t.string("content");
+    t.nonNull.field("audience", {
+      type: PostAudienceEnum,
+    });
+    t.nonNull.list.string("media");
+    t.string("feeling");
+    t.string("checkIn");
+    t.string("gif");
+    t.nonNull.string("createdAt");
+    t.nonNull.string("updatedAt");
   },
 });
 
@@ -14,7 +23,7 @@ export const PostQuery = extendType({
   definition(t) {
     t.nonNull.list.field("posts", {
       type: "Post",
-      resolve(_root, _args, ctx) {
+      resolve(_root, _args, ctx: Context) {
         return ctx.db.post.findMany();
       },
     });
@@ -28,15 +37,35 @@ export const PostMutation = extendType({
       type: "Post",
       args: {
         title: nonNull(stringArg()),
-        body: nonNull(stringArg()),
+        content: stringArg(),
+        audience: nonNull(PostAudienceEnum),
+        feeling: stringArg(),
+        checkIn: stringArg(),
+        gif: stringArg(),
       },
-      resolve(_root, args, ctx) {
-        const data = {
-          title: args.title,
-          body: args.body,
-        };
-        return ctx.db.post.create({ data });
+      resolve(_root, args, ctx: Context) {
+        return ctx.db.post.create({
+          data: {
+            title: args.title,
+            content: args.content,
+            audience: args.audience,
+            feeling: args.feeling,
+            checkIn: args.checkIn,
+            gif: args.gif,
+            author: {
+              connect: {
+                id: ctx.currentUser.id,
+              },
+            },
+          },
+        });
       },
     });
   },
+});
+
+export const PostAudienceEnum = enumType({
+  name: "PostAudienceEnum",
+  members: ["PUBLIC", "FRIENDS", "ONLY_ME", "SPECIFIC"],
+  description: "Who can see your post",
 });

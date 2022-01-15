@@ -17,6 +17,7 @@ export interface NexusGenInputs {
 }
 
 export interface NexusGenEnums {
+  PostAudienceEnum: "FRIENDS" | "ONLY_ME" | "PUBLIC" | "SPECIFIC"
 }
 
 export interface NexusGenScalars {
@@ -30,10 +31,16 @@ export interface NexusGenScalars {
 export interface NexusGenObjects {
   Mutation: {};
   Post: { // root type
-    body?: string | null; // String
-    id?: string | null; // ID
-    published?: boolean | null; // Boolean
-    title?: string | null; // String
+    audience: NexusGenEnums['PostAudienceEnum']; // PostAudienceEnum!
+    checkIn?: string | null; // String
+    content?: string | null; // String
+    createdAt: string; // String!
+    feeling?: string | null; // String
+    gif?: string | null; // String
+    id: string; // ID!
+    media: Array<string | null>; // [String]!
+    title: string; // String!
+    updatedAt: string; // String!
   }
   Query: {};
 }
@@ -46,17 +53,23 @@ export interface NexusGenUnions {
 
 export type NexusGenRootTypes = NexusGenObjects
 
-export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars
+export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars & NexusGenEnums
 
 export interface NexusGenFieldTypes {
   Mutation: { // field return type
     createPost: NexusGenRootTypes['Post']; // Post!
   }
   Post: { // field return type
-    body: string | null; // String
-    id: string | null; // ID
-    published: boolean | null; // Boolean
-    title: string | null; // String
+    audience: NexusGenEnums['PostAudienceEnum']; // PostAudienceEnum!
+    checkIn: string | null; // String
+    content: string | null; // String
+    createdAt: string; // String!
+    feeling: string | null; // String
+    gif: string | null; // String
+    id: string; // ID!
+    media: Array<string | null>; // [String]!
+    title: string; // String!
+    updatedAt: string; // String!
   }
   Query: { // field return type
     posts: Array<NexusGenRootTypes['Post'] | null>; // [Post]!
@@ -68,10 +81,16 @@ export interface NexusGenFieldTypeNames {
     createPost: 'Post'
   }
   Post: { // field return type name
-    body: 'String'
+    audience: 'PostAudienceEnum'
+    checkIn: 'String'
+    content: 'String'
+    createdAt: 'String'
+    feeling: 'String'
+    gif: 'String'
     id: 'ID'
-    published: 'Boolean'
+    media: 'String'
     title: 'String'
+    updatedAt: 'String'
   }
   Query: { // field return type name
     posts: 'Post'
@@ -81,7 +100,11 @@ export interface NexusGenFieldTypeNames {
 export interface NexusGenArgTypes {
   Mutation: {
     createPost: { // args
-      body: string; // String!
+      audience: NexusGenEnums['PostAudienceEnum']; // PostAudienceEnum!
+      checkIn?: string | null; // String
+      content?: string | null; // String
+      feeling?: string | null; // String
+      gif?: string | null; // String
       title: string; // String!
     }
   }
@@ -97,7 +120,7 @@ export type NexusGenObjectNames = keyof NexusGenObjects;
 
 export type NexusGenInputNames = never;
 
-export type NexusGenEnumNames = never;
+export type NexusGenEnumNames = keyof NexusGenEnums;
 
 export type NexusGenInterfaceNames = never;
 
