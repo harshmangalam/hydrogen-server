@@ -4,6 +4,7 @@
 
 type Mutation {
   createPost(audience: PostAudienceEnum!, checkIn: String, content: String, feeling: String, gif: String, title: String!): Post!
+  signup(data: SignupInputType!): SignupResponse!
 }
 
 type Post {
@@ -30,6 +31,19 @@ enum PostAudienceEnum {
 type Query {
   posts: [Post]!
   users: [User!]!
+}
+
+input SignupInputType {
+  email: String!
+  firstName: String!
+  lastName: String
+  password: String!
+}
+
+type SignupResponse {
+  message: String!
+  node: User
+  status: Int!
 }
 
 type User {

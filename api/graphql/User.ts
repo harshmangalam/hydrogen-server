@@ -61,9 +61,8 @@ export const UserQuery = extendType({
   definition(t) {
     t.nonNull.list.nonNull.field("users", {
       type: "User",
-      async resolve(_, __, ctx:Context) {
-       
-        const users = await ctx.db.user.findMany()
+      async resolve(_, __, ctx: Context) {
+        const users = await ctx.db.user.findMany();
         return users;
       },
     });

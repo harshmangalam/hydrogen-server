@@ -14,6 +14,12 @@ declare global {
 }
 
 export interface NexusGenInputs {
+  SignupInputType: { // input type
+    email: string; // String!
+    firstName: string; // String!
+    lastName?: string | null; // String
+    password: string; // String!
+  }
 }
 
 export interface NexusGenEnums {
@@ -44,6 +50,11 @@ export interface NexusGenObjects {
     updatedAt: string; // String!
   }
   Query: {};
+  SignupResponse: { // root type
+    message: string; // String!
+    node?: NexusGenRootTypes['User'] | null; // User
+    status: number; // Int!
+  }
   User: { // root type
     coverImage?: string | null; // String
     createdAt: string; // String!
@@ -72,6 +83,7 @@ export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars & NexusGenEnu
 export interface NexusGenFieldTypes {
   Mutation: { // field return type
     createPost: NexusGenRootTypes['Post']; // Post!
+    signup: NexusGenRootTypes['SignupResponse']; // SignupResponse!
   }
   Post: { // field return type
     audience: NexusGenEnums['PostAudienceEnum']; // PostAudienceEnum!
@@ -88,6 +100,11 @@ export interface NexusGenFieldTypes {
   Query: { // field return type
     posts: Array<NexusGenRootTypes['Post'] | null>; // [Post]!
     users: NexusGenRootTypes['User'][]; // [User!]!
+  }
+  SignupResponse: { // field return type
+    message: string; // String!
+    node: NexusGenRootTypes['User'] | null; // User
+    status: number; // Int!
   }
   User: { // field return type
     coverImage: string | null; // String
@@ -110,6 +127,7 @@ export interface NexusGenFieldTypes {
 export interface NexusGenFieldTypeNames {
   Mutation: { // field return type name
     createPost: 'Post'
+    signup: 'SignupResponse'
   }
   Post: { // field return type name
     audience: 'PostAudienceEnum'
@@ -126,6 +144,11 @@ export interface NexusGenFieldTypeNames {
   Query: { // field return type name
     posts: 'Post'
     users: 'User'
+  }
+  SignupResponse: { // field return type name
+    message: 'String'
+    node: 'User'
+    status: 'Int'
   }
   User: { // field return type name
     coverImage: 'String'
@@ -155,6 +178,9 @@ export interface NexusGenArgTypes {
       gif?: string | null; // String
       title: string; // String!
     }
+    signup: { // args
+      data: NexusGenInputs['SignupInputType']; // SignupInputType!
+    }
   }
 }
 
@@ -166,7 +192,7 @@ export interface NexusGenTypeInterfaces {
 
 export type NexusGenObjectNames = keyof NexusGenObjects;
 
-export type NexusGenInputNames = never;
+export type NexusGenInputNames = keyof NexusGenInputs;
 
 export type NexusGenEnumNames = keyof NexusGenEnums;
 
