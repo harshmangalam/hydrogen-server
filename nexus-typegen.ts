@@ -87,7 +87,7 @@ export interface NexusGenFieldTypes {
   }
   Query: { // field return type
     posts: Array<NexusGenRootTypes['Post'] | null>; // [Post]!
-    users: Array<NexusGenRootTypes['User'] | null>; // [User]!
+    users: NexusGenRootTypes['User'][]; // [User!]!
   }
   User: { // field return type
     coverImage: string | null; // String
@@ -98,8 +98,11 @@ export interface NexusGenFieldTypes {
     isActive: boolean; // Boolean!
     isEmailVerified: boolean; // Boolean!
     lastName: string | null; // String
+    posts: NexusGenRootTypes['Post'][]; // [Post!]!
     profileImage: string | null; // String
     role: NexusGenEnums['UserRole']; // UserRole!
+    specificAudienceInPosts: NexusGenRootTypes['User'][]; // [User!]!
+    taggedInPosts: NexusGenRootTypes['Post'][]; // [Post!]!
     updatedAt: string; // String!
   }
 }
@@ -133,8 +136,11 @@ export interface NexusGenFieldTypeNames {
     isActive: 'Boolean'
     isEmailVerified: 'Boolean'
     lastName: 'String'
+    posts: 'Post'
     profileImage: 'String'
     role: 'UserRole'
+    specificAudienceInPosts: 'User'
+    taggedInPosts: 'Post'
     updatedAt: 'String'
   }
 }

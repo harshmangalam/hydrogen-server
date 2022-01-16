@@ -15,6 +15,42 @@ export const User = objectType({
     t.string("profileImage");
     t.nonNull.boolean("isActive");
     t.nonNull.boolean("isEmailVerified");
+    t.nonNull.list.nonNull.field("posts", {
+      type: "Post",
+      async resolve(root, _args, ctx: Context) {
+        const posts = await ctx.db.post.findMany({
+          where: {
+            authorId: root.id,
+          },
+        });
+
+        return posts;
+      },
+    });
+    t.nonNull.list.nonNull.field("specificAudienceInPosts", {
+      type: "User",
+      async resolve(root, _args, ctx: Context) {
+        const posts = await ctx.db.post.findMany({
+          where: {
+            authorId: root.id,
+          },
+        });
+
+        return posts;
+      },
+    });
+    t.nonNull.list.nonNull.field("taggedInPosts", {
+      type: "Post",
+      async resolve(root, _args, ctx: Context) {
+        const posts = await ctx.db.post.findMany({
+          where: {
+            authorId: root.id,
+          },
+        });
+
+        return posts;
+      },
+    });
     t.nonNull.string("createdAt");
     t.nonNull.string("updatedAt");
   },
@@ -23,10 +59,12 @@ export const User = objectType({
 export const UserQuery = extendType({
   type: "Query",
   definition(t) {
-    t.nonNull.list.field("users", {
+    t.nonNull.list.nonNull.field("users", {
       type: "User",
-      resolve(_root, _args, ctx: Context) {
-        return ctx.db.user.findMany();
+      async resolve(_, __, ctx:Context) {
+       
+        const users = await ctx.db.user.findMany()
+        return users;
       },
     });
   },
