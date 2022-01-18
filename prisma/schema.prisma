@@ -35,7 +35,7 @@ model Post {
   audience                PostAudienceEnum @default(PUBLIC)
   author                  User             @relation(fields: [authorId], references: [id])
   authorId                String
-  media                   String[]
+  images                  String[]
   feeling                 String?
   checkIn                 String?
   gif                     String?
