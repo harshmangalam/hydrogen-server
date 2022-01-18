@@ -1,5 +1,5 @@
 import { enumType, extendType, objectType } from "nexus";
-import { Context } from "../context";
+import { Context } from "../../context";
 
 export const User = objectType({
   name: "User",

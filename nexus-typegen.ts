@@ -14,6 +14,10 @@ declare global {
 }
 
 export interface NexusGenInputs {
+  LoginInputType: { // input type
+    email: string; // String!
+    password: string; // String!
+  }
   SignupInputType: { // input type
     email: string; // String!
     firstName: string; // String!
@@ -36,6 +40,23 @@ export interface NexusGenScalars {
 }
 
 export interface NexusGenObjects {
+  LoginResponseNodesType: { // root type
+    accessToken: string; // String!
+    user: NexusGenRootTypes['User']; // User!
+  }
+  LoginResponseType: { // root type
+    message: string; // String!
+    nodes: NexusGenRootTypes['LoginResponseNodesType']; // LoginResponseNodesType!
+    status: number; // Int!
+  }
+  MeResponseNodesType: { // root type
+    user: NexusGenRootTypes['User']; // User!
+  }
+  MeResponseType: { // root type
+    message: string; // String!
+    nodes: NexusGenRootTypes['MeResponseNodesType']; // MeResponseNodesType!
+    status: number; // Int!
+  }
   Mutation: {};
   Post: { // root type
     audience: NexusGenEnums['PostAudienceEnum']; // PostAudienceEnum!
@@ -50,9 +71,12 @@ export interface NexusGenObjects {
     updatedAt: string; // String!
   }
   Query: {};
-  SignupResponse: { // root type
+  SignupResponseNodesType: { // root type
+    user?: NexusGenRootTypes['User'] | null; // User
+  }
+  SignupResponseType: { // root type
     message: string; // String!
-    node?: NexusGenRootTypes['User'] | null; // User
+    nodes: NexusGenRootTypes['SignupResponseNodesType']; // SignupResponseNodesType!
     status: number; // Int!
   }
   User: { // root type
@@ -81,9 +105,27 @@ export type NexusGenRootTypes = NexusGenObjects
 export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars & NexusGenEnums
 
 export interface NexusGenFieldTypes {
+  LoginResponseNodesType: { // field return type
+    accessToken: string; // String!
+    user: NexusGenRootTypes['User']; // User!
+  }
+  LoginResponseType: { // field return type
+    message: string; // String!
+    nodes: NexusGenRootTypes['LoginResponseNodesType']; // LoginResponseNodesType!
+    status: number; // Int!
+  }
+  MeResponseNodesType: { // field return type
+    user: NexusGenRootTypes['User']; // User!
+  }
+  MeResponseType: { // field return type
+    message: string; // String!
+    nodes: NexusGenRootTypes['MeResponseNodesType']; // MeResponseNodesType!
+    status: number; // Int!
+  }
   Mutation: { // field return type
     createPost: NexusGenRootTypes['Post']; // Post!
-    signup: NexusGenRootTypes['SignupResponse']; // SignupResponse!
+    login: NexusGenRootTypes['LoginResponseType']; // LoginResponseType!
+    signup: NexusGenRootTypes['SignupResponseType']; // SignupResponseType!
   }
   Post: { // field return type
     audience: NexusGenEnums['PostAudienceEnum']; // PostAudienceEnum!
@@ -98,12 +140,16 @@ export interface NexusGenFieldTypes {
     updatedAt: string; // String!
   }
   Query: { // field return type
+    me: NexusGenRootTypes['MeResponseType']; // MeResponseType!
     posts: Array<NexusGenRootTypes['Post'] | null>; // [Post]!
     users: NexusGenRootTypes['User'][]; // [User!]!
   }
-  SignupResponse: { // field return type
+  SignupResponseNodesType: { // field return type
+    user: NexusGenRootTypes['User'] | null; // User
+  }
+  SignupResponseType: { // field return type
     message: string; // String!
-    node: NexusGenRootTypes['User'] | null; // User
+    nodes: NexusGenRootTypes['SignupResponseNodesType']; // SignupResponseNodesType!
     status: number; // Int!
   }
   User: { // field return type
@@ -125,9 +171,27 @@ export interface NexusGenFieldTypes {
 }
 
 export interface NexusGenFieldTypeNames {
+  LoginResponseNodesType: { // field return type name
+    accessToken: 'String'
+    user: 'User'
+  }
+  LoginResponseType: { // field return type name
+    message: 'String'
+    nodes: 'LoginResponseNodesType'
+    status: 'Int'
+  }
+  MeResponseNodesType: { // field return type name
+    user: 'User'
+  }
+  MeResponseType: { // field return type name
+    message: 'String'
+    nodes: 'MeResponseNodesType'
+    status: 'Int'
+  }
   Mutation: { // field return type name
     createPost: 'Post'
-    signup: 'SignupResponse'
+    login: 'LoginResponseType'
+    signup: 'SignupResponseType'
   }
   Post: { // field return type name
     audience: 'PostAudienceEnum'
@@ -142,12 +206,16 @@ export interface NexusGenFieldTypeNames {
     updatedAt: 'String'
   }
   Query: { // field return type name
+    me: 'MeResponseType'
     posts: 'Post'
     users: 'User'
   }
-  SignupResponse: { // field return type name
+  SignupResponseNodesType: { // field return type name
+    user: 'User'
+  }
+  SignupResponseType: { // field return type name
     message: 'String'
-    node: 'User'
+    nodes: 'SignupResponseNodesType'
     status: 'Int'
   }
   User: { // field return type name
@@ -177,6 +245,9 @@ export interface NexusGenArgTypes {
       feeling?: string | null; // String
       gif?: string | null; // String
       title: string; // String!
+    }
+    login: { // args
+      data: NexusGenInputs['LoginInputType']; // LoginInputType!
     }
     signup: { // args
       data: NexusGenInputs['SignupInputType']; // SignupInputType!

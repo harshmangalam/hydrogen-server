@@ -2,9 +2,36 @@
 ### Do not make changes to this file directly
 
 
+input LoginInputType {
+  email: String!
+  password: String!
+}
+
+type LoginResponseNodesType {
+  accessToken: String!
+  user: User!
+}
+
+type LoginResponseType {
+  message: String!
+  nodes: LoginResponseNodesType!
+  status: Int!
+}
+
+type MeResponseNodesType {
+  user: User!
+}
+
+type MeResponseType {
+  message: String!
+  nodes: MeResponseNodesType!
+  status: Int!
+}
+
 type Mutation {
   createPost(audience: PostAudienceEnum!, checkIn: String, content: String, feeling: String, gif: String, title: String!): Post!
-  signup(data: SignupInputType!): SignupResponse!
+  login(data: LoginInputType!): LoginResponseType!
+  signup(data: SignupInputType!): SignupResponseType!
 }
 
 type Post {
@@ -29,6 +56,7 @@ enum PostAudienceEnum {
 }
 
 type Query {
+  me: MeResponseType!
   posts: [Post]!
   users: [User!]!
 }
@@ -40,9 +68,13 @@ input SignupInputType {
   password: String!
 }
 
-type SignupResponse {
+type SignupResponseNodesType {
+  user: User
+}
+
+type SignupResponseType {
   message: String!
-  node: User
+  nodes: SignupResponseNodesType!
   status: Int!
 }
 
