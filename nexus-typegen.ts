@@ -59,6 +59,18 @@ export interface NexusGenObjects {
     nodes: NexusGenRootTypes['CreatePostResponseNodesType']; // CreatePostResponseNodesType!
     status: number; // Int!
   }
+  FetchPostsEdges: { // root type
+    cursor: string; // ID!
+    node: NexusGenRootTypes['Post']; // Post!
+  }
+  FetchPostsPageInfo: { // root type
+    endCursor: string; // ID!
+    hasNextPage: boolean; // Boolean!
+  }
+  FetchPostsQuery: { // root type
+    edges: NexusGenRootTypes['FetchPostsEdges'][]; // [FetchPostsEdges!]!
+    pageInfo: NexusGenRootTypes['FetchPostsPageInfo']; // FetchPostsPageInfo!
+  }
   LoginResponseNodesType: { // root type
     accessToken: string; // String!
     user: NexusGenRootTypes['User']; // User!
@@ -133,6 +145,18 @@ export interface NexusGenFieldTypes {
     nodes: NexusGenRootTypes['CreatePostResponseNodesType']; // CreatePostResponseNodesType!
     status: number; // Int!
   }
+  FetchPostsEdges: { // field return type
+    cursor: string; // ID!
+    node: NexusGenRootTypes['Post']; // Post!
+  }
+  FetchPostsPageInfo: { // field return type
+    endCursor: string; // ID!
+    hasNextPage: boolean; // Boolean!
+  }
+  FetchPostsQuery: { // field return type
+    edges: NexusGenRootTypes['FetchPostsEdges'][]; // [FetchPostsEdges!]!
+    pageInfo: NexusGenRootTypes['FetchPostsPageInfo']; // FetchPostsPageInfo!
+  }
   LoginResponseNodesType: { // field return type
     accessToken: string; // String!
     user: NexusGenRootTypes['User']; // User!
@@ -173,7 +197,7 @@ export interface NexusGenFieldTypes {
   }
   Query: { // field return type
     me: NexusGenRootTypes['MeResponseType']; // MeResponseType!
-    posts: Array<NexusGenRootTypes['Post'] | null>; // [Post]!
+    posts: NexusGenRootTypes['FetchPostsQuery']; // FetchPostsQuery!
     users: NexusGenRootTypes['User'][]; // [User!]!
   }
   SignupResponseNodesType: { // field return type
@@ -210,6 +234,18 @@ export interface NexusGenFieldTypeNames {
     message: 'String'
     nodes: 'CreatePostResponseNodesType'
     status: 'Int'
+  }
+  FetchPostsEdges: { // field return type name
+    cursor: 'ID'
+    node: 'Post'
+  }
+  FetchPostsPageInfo: { // field return type name
+    endCursor: 'ID'
+    hasNextPage: 'Boolean'
+  }
+  FetchPostsQuery: { // field return type name
+    edges: 'FetchPostsEdges'
+    pageInfo: 'FetchPostsPageInfo'
   }
   LoginResponseNodesType: { // field return type name
     accessToken: 'String'
@@ -251,7 +287,7 @@ export interface NexusGenFieldTypeNames {
   }
   Query: { // field return type name
     me: 'MeResponseType'
-    posts: 'Post'
+    posts: 'FetchPostsQuery'
     users: 'User'
   }
   SignupResponseNodesType: { // field return type name
@@ -290,6 +326,12 @@ export interface NexusGenArgTypes {
     }
     signup: { // args
       data: NexusGenInputs['SignupInputType']; // SignupInputType!
+    }
+  }
+  Query: {
+    posts: { // args
+      cursor?: string | null; // ID
+      take: number; // Int!
     }
   }
 }

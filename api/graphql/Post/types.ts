@@ -79,6 +79,7 @@ export const PostAudienceEnum = enumType({
   description: "Who can see your post",
 });
 
+// start create post type
 export const CreatePostInputType = inputObjectType({
   name: "CreatePostInputType",
   definition(t) {
@@ -114,3 +115,35 @@ export const CreatePostResponseType = objectType({
     });
   },
 });
+
+// end create post type
+
+// start posts query type
+export const FetchPostsEdges = objectType({
+  name: "FetchPostsEdges",
+  definition(t) {
+    t.nonNull.field("node", {
+      type: "Post",
+    });
+    t.nonNull.id("cursor");
+  },
+});
+export const FetchPostsPageInfo = objectType({
+  name: "FetchPostsPageInfo",
+  definition(t) {
+    t.nonNull.boolean("hasNextPage");
+    t.nonNull.id("endCursor");
+  },
+});
+export const FetchPostsQuery = objectType({
+  name: "FetchPostsQuery",
+  definition(t) {
+    t.nonNull.list.nonNull.field("edges", {
+      type: "FetchPostsEdges",
+    });
+    t.nonNull.field("pageInfo", {
+      type: "FetchPostsPageInfo",
+    });
+  },
+});
+// end posts query type

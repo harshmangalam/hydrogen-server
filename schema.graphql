@@ -24,6 +24,21 @@ type CreatePostResponseType {
   status: Int!
 }
 
+type FetchPostsEdges {
+  cursor: ID!
+  node: Post!
+}
+
+type FetchPostsPageInfo {
+  endCursor: ID!
+  hasNextPage: Boolean!
+}
+
+type FetchPostsQuery {
+  edges: [FetchPostsEdges!]!
+  pageInfo: FetchPostsPageInfo!
+}
+
 input LoginInputType {
   email: String!
   password: String!
@@ -83,7 +98,7 @@ enum PostAudienceEnum {
 
 type Query {
   me: MeResponseType!
-  posts: [Post]!
+  posts(cursor: ID, take: Int!): FetchPostsQuery!
   users: [User!]!
 }
 
