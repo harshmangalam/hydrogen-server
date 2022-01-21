@@ -12,10 +12,10 @@ export const SignupInputType = inputObjectType({
 });
 
 // signup response nodes type
-export const SignupResponseNodesType = objectType({
-  name: "SignupResponseNodesType",
+export const SignupResponseEdgesType = objectType({
+  name: "SignupResponseEdgesType",
   definition(t) {
-    t.field("user", {
+    t.field("node", {
       type: "User",
     });
   },
@@ -25,10 +25,8 @@ export const SignupResponseNodesType = objectType({
 export const SignupResponseType = objectType({
   name: "SignupResponseType",
   definition(t) {
-    t.nonNull.string("message");
-    t.nonNull.int("status");
-    t.nonNull.field("nodes", {
-      type: "SignupResponseNodesType",
+    t.nonNull.field("edges", {
+      type: "SignupResponseEdgesType",
     });
   },
 });
@@ -45,11 +43,11 @@ export const LoginInputType = inputObjectType({
 
 // login response nodes type
 
-export const LoginResponseNodesType = objectType({
-  name: "LoginResponseNodesType",
+export const LoginResponseEdgesType = objectType({
+  name: "LoginResponseEdgesType",
   definition(t) {
     t.nonNull.string("accessToken");
-    t.nonNull.field("user", {
+    t.nonNull.field("node", {
       type: "User",
     });
   },
@@ -59,20 +57,18 @@ export const LoginResponseNodesType = objectType({
 export const LoginResponseType = objectType({
   name: "LoginResponseType",
   definition(t) {
-    t.nonNull.string("message");
-    t.nonNull.int("status");
-    t.nonNull.field("nodes", {
-      type: "LoginResponseNodesType",
+    t.nonNull.field("edges", {
+      type: "LoginResponseEdgesType",
     });
   },
 });
 
 // me response nodes type
 
-export const MeResponseNodesType = objectType({
-  name: "MeResponseNodesType",
+export const MeResponseEdgesType = objectType({
+  name: "MeResponseEdgesType",
   definition(t) {
-    t.nonNull.field("user", {
+    t.nonNull.field("node", {
       type: "User",
     });
   },
@@ -82,10 +78,8 @@ export const MeResponseNodesType = objectType({
 export const MeResponseType = objectType({
   name: "MeResponseType",
   definition(t) {
-    t.nonNull.string("message"),
-      t.nonNull.int("status"),
-      t.nonNull.field("nodes", {
-        type: "MeResponseNodesType",
-      });
+    t.nonNull.field("edges", {
+      type: "MeResponseEdgesType",
+    });
   },
 });

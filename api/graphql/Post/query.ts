@@ -7,7 +7,7 @@ export const PostQuery = extendType({
     t.nonNull.field("posts", {
       type: "FetchPostsQuery",
       args: {
-        take: nonNull(intArg()),
+        take: intArg(),
         cursor: idArg(),
       },
       async resolve(_root, { cursor, take = 10 }, ctx: Context) {

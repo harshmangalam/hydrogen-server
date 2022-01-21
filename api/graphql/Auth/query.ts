@@ -20,10 +20,8 @@ export const AuthQuery = extendType({
           });
 
           return {
-            message: "Fetch current user",
-            status: 200,
-            nodes: {
-              user,
+            edges: {
+              node: user,
             },
           };
         } catch (error) {

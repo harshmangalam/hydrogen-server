@@ -39,10 +39,8 @@ export const AuthMutation = extendType({
           });
 
           return {
-            message: `Account created for ${newUser.firstName}`,
-            status: 201,
-            nodes: {
-              user: newUser,
+            edges: {
+              node: newUser,
             },
           };
         } catch (error) {
@@ -82,15 +80,13 @@ export const AuthMutation = extendType({
             { userId: user.id },
             process.env.JWT_SECRET as string,
             {
-                expiresIn:"2days"
+              expiresIn: "2days",
             }
           );
 
           return {
-            message: `Login successfully as ${user.firstName}`,
-            status: 201,
-            nodes: {
-              user,
+            edges: {
+              node: user,
               accessToken,
             },
           };

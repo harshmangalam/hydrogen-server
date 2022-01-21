@@ -44,25 +44,21 @@ input LoginInputType {
   password: String!
 }
 
-type LoginResponseNodesType {
+type LoginResponseEdgesType {
   accessToken: String!
-  user: User!
+  node: User!
 }
 
 type LoginResponseType {
-  message: String!
-  nodes: LoginResponseNodesType!
-  status: Int!
+  edges: LoginResponseEdgesType!
 }
 
-type MeResponseNodesType {
-  user: User!
+type MeResponseEdgesType {
+  node: User!
 }
 
 type MeResponseType {
-  message: String!
-  nodes: MeResponseNodesType!
-  status: Int!
+  edges: MeResponseEdgesType!
 }
 
 type Mutation {
@@ -98,7 +94,7 @@ enum PostAudienceEnum {
 
 type Query {
   me: MeResponseType!
-  posts(cursor: ID, take: Int!): FetchPostsQuery!
+  posts(cursor: ID, take: Int): FetchPostsQuery!
   users: [User!]!
 }
 
@@ -109,14 +105,12 @@ input SignupInputType {
   password: String!
 }
 
-type SignupResponseNodesType {
-  user: User
+type SignupResponseEdgesType {
+  node: User
 }
 
 type SignupResponseType {
-  message: String!
-  nodes: SignupResponseNodesType!
-  status: Int!
+  edges: SignupResponseEdgesType!
 }
 
 type User {
