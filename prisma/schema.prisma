@@ -11,20 +11,21 @@ datasource db {
 }
 
 model User {
-  id                      String   @id @default(uuid())
+  id                      String     @id @default(uuid())
   firstName               String
   lastName                String?
-  email                   String   @unique
+  email                   String     @unique
   password                String
+  gender                  UserGender
   coverImage              String?
   profileImage            String?
-  role                    UserRole @default(USER)
-  isActive                Boolean  @default(false)
-  isEmailVerified         Boolean  @default(false)
-  createdAt               DateTime @default(now())
-  updatedAt               DateTime @updatedAt
-  taggedInPosts           Post[]   @relation("_UsersPostsTag")
-  specificAudienceInPosts Post[]   @relation("_UsersPostsSpecificAudience")
+  role                    UserRole   @default(USER)
+  isActive                Boolean    @default(false)
+  isEmailVerified         Boolean    @default(false)
+  createdAt               DateTime   @default(now())
+  updatedAt               DateTime   @updatedAt
+  taggedInPosts           Post[]     @relation("_UsersPostsTag")
+  specificAudienceInPosts Post[]     @relation("_UsersPostsSpecificAudience")
   posts                   Post[]
 }
 
@@ -55,4 +56,10 @@ enum PostAudienceEnum {
 enum UserRole {
   ADMIN
   USER
+}
+
+enum UserGender {
+  MALE
+  FEMALE
+  OTHER
 }

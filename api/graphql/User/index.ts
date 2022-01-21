@@ -8,6 +8,9 @@ export const User = objectType({
     t.nonNull.string("firstName");
     t.nonNull.string("email");
     t.string("lastName");
+    t.field("gender", {
+      type: "UserGender",
+    });
     t.nonNull.field("role", {
       type: UserRole,
     });
@@ -73,4 +76,10 @@ export const UserRole = enumType({
   name: "UserRole",
   members: ["ADMIN", "USER"],
   description: "Resource access rules",
+});
+
+export const UserGender = enumType({
+  name: "UserGender",
+  members: ["MALE", "FEMALE", "OTHER"],
+  description: "user gender",
 });

@@ -32,6 +32,7 @@ export interface NexusGenInputs {
   SignupInputType: { // input type
     email: string; // String!
     firstName: string; // String!
+    gender: NexusGenEnums['UserGender']; // UserGender!
     lastName?: string | null; // String
     password: string; // String!
   }
@@ -39,6 +40,7 @@ export interface NexusGenInputs {
 
 export interface NexusGenEnums {
   PostAudienceEnum: "FRIENDS" | "ONLY_ME" | "PUBLIC" | "SPECIFIC"
+  UserGender: "FEMALE" | "MALE" | "OTHER"
   UserRole: "ADMIN" | "USER"
 }
 
@@ -110,6 +112,7 @@ export interface NexusGenObjects {
     createdAt: string; // String!
     email: string; // String!
     firstName: string; // String!
+    gender?: NexusGenEnums['UserGender'] | null; // UserGender
     id: string; // ID!
     isActive: boolean; // Boolean!
     isEmailVerified: boolean; // Boolean!
@@ -201,6 +204,7 @@ export interface NexusGenFieldTypes {
     createdAt: string; // String!
     email: string; // String!
     firstName: string; // String!
+    gender: NexusGenEnums['UserGender'] | null; // UserGender
     id: string; // ID!
     isActive: boolean; // Boolean!
     isEmailVerified: boolean; // Boolean!
@@ -285,6 +289,7 @@ export interface NexusGenFieldTypeNames {
     createdAt: 'String'
     email: 'String'
     firstName: 'String'
+    gender: 'UserGender'
     id: 'ID'
     isActive: 'Boolean'
     isEmailVerified: 'Boolean'

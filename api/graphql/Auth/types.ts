@@ -8,6 +8,9 @@ export const SignupInputType = inputObjectType({
     t.string("lastName");
     t.nonNull.string("email");
     t.nonNull.string("password");
+    t.nonNull.field("gender", {
+      type: "UserGender",
+    });
   },
 });
 

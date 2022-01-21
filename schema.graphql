@@ -101,6 +101,7 @@ type Query {
 input SignupInputType {
   email: String!
   firstName: String!
+  gender: UserGender!
   lastName: String
   password: String!
 }
@@ -118,6 +119,7 @@ type User {
   createdAt: String!
   email: String!
   firstName: String!
+  gender: UserGender
   id: ID!
   isActive: Boolean!
   isEmailVerified: Boolean!
@@ -128,6 +130,13 @@ type User {
   specificAudienceInPosts: [User!]!
   taggedInPosts: [Post!]!
   updatedAt: String!
+}
+
+"""user gender"""
+enum UserGender {
+  FEMALE
+  MALE
+  OTHER
 }
 
 """Resource access rules"""

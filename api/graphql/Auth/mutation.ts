@@ -35,6 +35,7 @@ export const AuthMutation = extendType({
               firstName: args.data.firstName,
               lastName: args.data.lastName,
               password: hashPassword,
+              gender: args.data.gender,
             },
           });
 
