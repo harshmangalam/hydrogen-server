@@ -2,26 +2,24 @@
 ### Do not make changes to this file directly
 
 
+type CreatePostEdges {
+  node: Post!
+}
+
 input CreatePostInputType {
-  audience: PostAudienceEnum!
+  audience: PostAudienceEnum
   checkIn: String
   content: String
   feeling: String
   gif: String
-  images: [String]!
-  specificAudienceFriends: [ID]!
-  taggedFriends: [ID]!
+  images: [String]
+  specificAudienceFriends: [ID]
+  taggedFriends: [ID]
   title: String!
 }
 
-type CreatePostResponseNodesType {
-  post: Post!
-}
-
-type CreatePostResponseType {
-  message: String!
-  nodes: CreatePostResponseNodesType!
-  status: Int!
+type CreatePostMutation {
+  edges: CreatePostEdges!
 }
 
 type FetchPostsEdges {
@@ -30,7 +28,7 @@ type FetchPostsEdges {
 }
 
 type FetchPostsPageInfo {
-  endCursor: ID!
+  endCursor: ID
   hasNextPage: Boolean!
 }
 
@@ -62,7 +60,7 @@ type MeResponseType {
 }
 
 type Mutation {
-  createPost(data: CreatePostInputType!): CreatePostResponseType!
+  createPost(data: CreatePostInputType!): CreatePostMutation!
   login(data: LoginInputType!): LoginResponseType!
   signup(data: SignupInputType!): SignupResponseType!
 }

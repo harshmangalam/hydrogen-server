@@ -6,7 +6,7 @@ export const PostMutation = extendType({
   type: "Mutation",
   definition(t) {
     t.nonNull.field("createPost", {
-      type: "CreatePostResponseType",
+      type: "CreatePostMutation",
       args: {
         data: nonNull("CreatePostInputType"),
       },
@@ -23,30 +23,32 @@ export const PostMutation = extendType({
               feeling: args.data.feeling,
               checkIn: args.data.checkIn,
               gif: args.data.gif,
-              images: args.data.images,
+              images: args.data.images?.length ? args.data.images : undefined,
               author: {
                 connect: {
                   id: ctx.user.id,
                 },
               },
-              taggedFriends: {
-                connect: args.data.taggedFriends.map((id) => ({
-                  id,
-                })),
-              },
-              specificAudienceFriends: {
-                connect: args.data.specificAudienceFriends.map((id) => ({
-                  id,
-                })),
-              },
+              taggedFriends: args.data.taggedFriends?.length
+                ? {
+                    connect: args.data.taggedFriends.map((id) => ({
+                      id,
+                    })),
+                  }
+                : undefined,
+              specificAudienceFriends: args.data.specificAudienceFriends?.length
+                ? {
+                    connect: args.data.specificAudienceFriends.map((id) => ({
+                      id,
+                    })),
+                  }
+                : undefined,
             },
           });
 
           return {
-            message: "Post created successfully",
-            status: 201,
-            nodes: {
-              post: newPost,
+            edges: {
+              node: newPost,
             },
           };
         } catch (error) {

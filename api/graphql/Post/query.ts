@@ -23,6 +23,7 @@ export const PostQuery = extendType({
 
           const hasNextPage = posts.length > take;
           const nodes = hasNextPage ? posts.slice(0, -1) : posts;
+
           const edges = nodes.map((node) => ({
             node,
             cursor: node.id,
@@ -31,7 +32,7 @@ export const PostQuery = extendType({
           return {
             edges,
             pageInfo: {
-              endCursor: nodes[nodes.length - 1].id,
+              endCursor: nodes.length ? nodes[nodes.length - 1].id : null,
               hasNextPage,
             },
           };

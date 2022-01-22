@@ -85,33 +85,32 @@ export const CreatePostInputType = inputObjectType({
   definition(t) {
     t.nonNull.string("title");
     t.string("content");
-    t.nonNull.field("audience", {
+    t.field("audience", {
       type: "PostAudienceEnum",
     });
-    t.nonNull.list.string("images");
+    t.list.string("images");
     t.string("feeling");
     t.string("checkIn");
     t.string("gif");
-    t.nonNull.list.id("taggedFriends");
-    t.nonNull.list.id("specificAudienceFriends");
+    t.list.id("taggedFriends");
+    t.list.id("specificAudienceFriends");
   },
 });
 
-export const CreatePostResponseNodesType = objectType({
-  name: "CreatePostResponseNodesType",
+export const CreatePostEdges = objectType({
+  name: "CreatePostEdges",
   definition(t) {
-    t.nonNull.field("post", {
+    t.nonNull.field("node", {
       type: "Post",
     });
   },
 });
 
-export const CreatePostResponseType = objectType({
-  name: "CreatePostResponseType",
+export const CreatePostMutation = objectType({
+  name: "CreatePostMutation",
   definition(t) {
-    t.nonNull.string("message"), t.nonNull.int("status");
-    t.nonNull.field("nodes", {
-      type: "CreatePostResponseNodesType",
+    t.nonNull.field("edges", {
+      type: "CreatePostEdges",
     });
   },
 });
@@ -132,7 +131,7 @@ export const FetchPostsPageInfo = objectType({
   name: "FetchPostsPageInfo",
   definition(t) {
     t.nonNull.boolean("hasNextPage");
-    t.nonNull.id("endCursor");
+    t.id("endCursor");
   },
 });
 export const FetchPostsQuery = objectType({

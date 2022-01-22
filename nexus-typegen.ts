@@ -15,14 +15,14 @@ declare global {
 
 export interface NexusGenInputs {
   CreatePostInputType: { // input type
-    audience: NexusGenEnums['PostAudienceEnum']; // PostAudienceEnum!
+    audience?: NexusGenEnums['PostAudienceEnum'] | null; // PostAudienceEnum
     checkIn?: string | null; // String
     content?: string | null; // String
     feeling?: string | null; // String
     gif?: string | null; // String
-    images: Array<string | null>; // [String]!
-    specificAudienceFriends: Array<string | null>; // [ID]!
-    taggedFriends: Array<string | null>; // [ID]!
+    images?: Array<string | null> | null; // [String]
+    specificAudienceFriends?: Array<string | null> | null; // [ID]
+    taggedFriends?: Array<string | null> | null; // [ID]
     title: string; // String!
   }
   LoginInputType: { // input type
@@ -53,20 +53,18 @@ export interface NexusGenScalars {
 }
 
 export interface NexusGenObjects {
-  CreatePostResponseNodesType: { // root type
-    post: NexusGenRootTypes['Post']; // Post!
+  CreatePostEdges: { // root type
+    node: NexusGenRootTypes['Post']; // Post!
   }
-  CreatePostResponseType: { // root type
-    message: string; // String!
-    nodes: NexusGenRootTypes['CreatePostResponseNodesType']; // CreatePostResponseNodesType!
-    status: number; // Int!
+  CreatePostMutation: { // root type
+    edges: NexusGenRootTypes['CreatePostEdges']; // CreatePostEdges!
   }
   FetchPostsEdges: { // root type
     cursor: string; // ID!
     node: NexusGenRootTypes['Post']; // Post!
   }
   FetchPostsPageInfo: { // root type
-    endCursor: string; // ID!
+    endCursor?: string | null; // ID
     hasNextPage: boolean; // Boolean!
   }
   FetchPostsQuery: { // root type
@@ -134,20 +132,18 @@ export type NexusGenRootTypes = NexusGenObjects
 export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars & NexusGenEnums
 
 export interface NexusGenFieldTypes {
-  CreatePostResponseNodesType: { // field return type
-    post: NexusGenRootTypes['Post']; // Post!
+  CreatePostEdges: { // field return type
+    node: NexusGenRootTypes['Post']; // Post!
   }
-  CreatePostResponseType: { // field return type
-    message: string; // String!
-    nodes: NexusGenRootTypes['CreatePostResponseNodesType']; // CreatePostResponseNodesType!
-    status: number; // Int!
+  CreatePostMutation: { // field return type
+    edges: NexusGenRootTypes['CreatePostEdges']; // CreatePostEdges!
   }
   FetchPostsEdges: { // field return type
     cursor: string; // ID!
     node: NexusGenRootTypes['Post']; // Post!
   }
   FetchPostsPageInfo: { // field return type
-    endCursor: string; // ID!
+    endCursor: string | null; // ID
     hasNextPage: boolean; // Boolean!
   }
   FetchPostsQuery: { // field return type
@@ -168,7 +164,7 @@ export interface NexusGenFieldTypes {
     edges: NexusGenRootTypes['MeResponseEdgesType']; // MeResponseEdgesType!
   }
   Mutation: { // field return type
-    createPost: NexusGenRootTypes['CreatePostResponseType']; // CreatePostResponseType!
+    createPost: NexusGenRootTypes['CreatePostMutation']; // CreatePostMutation!
     login: NexusGenRootTypes['LoginResponseType']; // LoginResponseType!
     signup: NexusGenRootTypes['SignupResponseType']; // SignupResponseType!
   }
@@ -219,13 +215,11 @@ export interface NexusGenFieldTypes {
 }
 
 export interface NexusGenFieldTypeNames {
-  CreatePostResponseNodesType: { // field return type name
-    post: 'Post'
+  CreatePostEdges: { // field return type name
+    node: 'Post'
   }
-  CreatePostResponseType: { // field return type name
-    message: 'String'
-    nodes: 'CreatePostResponseNodesType'
-    status: 'Int'
+  CreatePostMutation: { // field return type name
+    edges: 'CreatePostEdges'
   }
   FetchPostsEdges: { // field return type name
     cursor: 'ID'
@@ -253,7 +247,7 @@ export interface NexusGenFieldTypeNames {
     edges: 'MeResponseEdgesType'
   }
   Mutation: { // field return type name
-    createPost: 'CreatePostResponseType'
+    createPost: 'CreatePostMutation'
     login: 'LoginResponseType'
     signup: 'SignupResponseType'
   }
