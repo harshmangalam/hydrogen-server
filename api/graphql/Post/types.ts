@@ -146,3 +146,22 @@ export const FetchPostsQuery = objectType({
   },
 });
 // end posts query type
+
+// start post query type
+
+export const FetchPostEdge = objectType({
+  name: "FetchPostEdge",
+  definition(t) {
+    t.nonNull.field("node", {
+      type: "Post",
+    });
+  },
+});
+export const FetchPostQuery = objectType({
+  name: "FetchPostQuery",
+  definition(t) {
+    t.nonNull.field("edge", {
+      type: "FetchPostEdge",
+    });
+  },
+});

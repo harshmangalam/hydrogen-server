@@ -22,6 +22,14 @@ type CreatePostMutation {
   edges: CreatePostEdges!
 }
 
+type FetchPostEdge {
+  node: Post!
+}
+
+type FetchPostQuery {
+  edge: FetchPostEdge!
+}
+
 type FetchPostsEdges {
   cursor: ID!
   node: Post!
@@ -92,6 +100,7 @@ enum PostAudienceEnum {
 
 type Query {
   me: MeResponseType!
+  post(id: ID!): FetchPostQuery!
   posts(cursor: ID, take: Int): FetchPostsQuery!
   users: [User!]!
 }

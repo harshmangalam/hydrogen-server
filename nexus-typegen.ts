@@ -59,6 +59,12 @@ export interface NexusGenObjects {
   CreatePostMutation: { // root type
     edges: NexusGenRootTypes['CreatePostEdges']; // CreatePostEdges!
   }
+  FetchPostEdge: { // root type
+    node: NexusGenRootTypes['Post']; // Post!
+  }
+  FetchPostQuery: { // root type
+    edge: NexusGenRootTypes['FetchPostEdge']; // FetchPostEdge!
+  }
   FetchPostsEdges: { // root type
     cursor: string; // ID!
     node: NexusGenRootTypes['Post']; // Post!
@@ -138,6 +144,12 @@ export interface NexusGenFieldTypes {
   CreatePostMutation: { // field return type
     edges: NexusGenRootTypes['CreatePostEdges']; // CreatePostEdges!
   }
+  FetchPostEdge: { // field return type
+    node: NexusGenRootTypes['Post']; // Post!
+  }
+  FetchPostQuery: { // field return type
+    edge: NexusGenRootTypes['FetchPostEdge']; // FetchPostEdge!
+  }
   FetchPostsEdges: { // field return type
     cursor: string; // ID!
     node: NexusGenRootTypes['Post']; // Post!
@@ -186,6 +198,7 @@ export interface NexusGenFieldTypes {
   }
   Query: { // field return type
     me: NexusGenRootTypes['MeResponseType']; // MeResponseType!
+    post: NexusGenRootTypes['FetchPostQuery']; // FetchPostQuery!
     posts: NexusGenRootTypes['FetchPostsQuery']; // FetchPostsQuery!
     users: NexusGenRootTypes['User'][]; // [User!]!
   }
@@ -220,6 +233,12 @@ export interface NexusGenFieldTypeNames {
   }
   CreatePostMutation: { // field return type name
     edges: 'CreatePostEdges'
+  }
+  FetchPostEdge: { // field return type name
+    node: 'Post'
+  }
+  FetchPostQuery: { // field return type name
+    edge: 'FetchPostEdge'
   }
   FetchPostsEdges: { // field return type name
     cursor: 'ID'
@@ -269,6 +288,7 @@ export interface NexusGenFieldTypeNames {
   }
   Query: { // field return type name
     me: 'MeResponseType'
+    post: 'FetchPostQuery'
     posts: 'FetchPostsQuery'
     users: 'User'
   }
@@ -310,6 +330,9 @@ export interface NexusGenArgTypes {
     }
   }
   Query: {
+    post: { // args
+      id: string; // ID!
+    }
     posts: { // args
       cursor?: string | null; // ID
       take?: number | null; // Int
