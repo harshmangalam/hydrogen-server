@@ -12,9 +12,11 @@ export const PostMutation = extendType({
       },
       async resolve(_root, args, ctx: Context) {
         try {
+          // check for current user
           if (!ctx.user) {
             throw new AuthenticationError("unauthenticated");
           }
+          // create new post
           const newPost = await ctx.db.post.create({
             data: {
               title: args.data.title,
@@ -64,6 +66,10 @@ export const PostMutation = extendType({
       },
       async resolve(_root, { id }, ctx: Context) {
         try {
+          // check for current user
+          if (!ctx.user) {
+            throw new AuthenticationError("unauthenticated");
+          }
           // find post by provided id
           const findPost = await ctx.db.post.findUnique({
             where: {
