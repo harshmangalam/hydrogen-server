@@ -20,6 +20,13 @@ export const PostQuery = extendType({
                   id: cursor,
                 }
               : undefined,
+            include: {
+              _count: {
+                select: {
+                  likes: true,
+                },
+              },
+            },
           });
 
           const hasNextPage = posts.length > take;
@@ -54,6 +61,13 @@ export const PostQuery = extendType({
             where: {
               id,
             },
+            include:{
+              _count:{
+                select:{
+                  likes:true
+                }
+              }
+            }
           });
 
           if (!post) {

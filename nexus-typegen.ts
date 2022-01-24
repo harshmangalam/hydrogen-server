@@ -92,6 +92,7 @@ export interface NexusGenObjects {
   }
   Mutation: {};
   Post: { // root type
+    _count: NexusGenRootTypes['PostRelationCount']; // PostRelationCount!
     audience: NexusGenEnums['PostAudienceEnum']; // PostAudienceEnum!
     authorId: string; // ID!
     checkIn?: string | null; // String
@@ -103,6 +104,22 @@ export interface NexusGenObjects {
     images: Array<string | null>; // [String]!
     title: string; // String!
     updatedAt: string; // String!
+  }
+  PostLike: { // root type
+    createdAt: string; // String!
+    post: NexusGenRootTypes['Post']; // Post!
+    postId: string; // String!
+    user: NexusGenRootTypes['User']; // User!
+    userId: string; // String!
+  }
+  PostLikeEdge: { // root type
+    node: NexusGenRootTypes['Post']; // Post!
+  }
+  PostLikeMutation: { // root type
+    edge: NexusGenRootTypes['PostLikeEdge']; // PostLikeEdge!
+  }
+  PostRelationCount: { // root type
+    likes?: number | null; // Int
   }
   Query: {};
   SignupResponseEdgesType: { // root type
@@ -179,8 +196,10 @@ export interface NexusGenFieldTypes {
     createPost: NexusGenRootTypes['CreatePostMutation']; // CreatePostMutation!
     login: NexusGenRootTypes['LoginResponseType']; // LoginResponseType!
     signup: NexusGenRootTypes['SignupResponseType']; // SignupResponseType!
+    togglePostLike: NexusGenRootTypes['PostLikeMutation']; // PostLikeMutation!
   }
   Post: { // field return type
+    _count: NexusGenRootTypes['PostRelationCount']; // PostRelationCount!
     audience: NexusGenEnums['PostAudienceEnum']; // PostAudienceEnum!
     author: NexusGenRootTypes['User']; // User!
     authorId: string; // ID!
@@ -195,6 +214,22 @@ export interface NexusGenFieldTypes {
     taggedFriends: NexusGenRootTypes['User'][]; // [User!]!
     title: string; // String!
     updatedAt: string; // String!
+  }
+  PostLike: { // field return type
+    createdAt: string; // String!
+    post: NexusGenRootTypes['Post']; // Post!
+    postId: string; // String!
+    user: NexusGenRootTypes['User']; // User!
+    userId: string; // String!
+  }
+  PostLikeEdge: { // field return type
+    node: NexusGenRootTypes['Post']; // Post!
+  }
+  PostLikeMutation: { // field return type
+    edge: NexusGenRootTypes['PostLikeEdge']; // PostLikeEdge!
+  }
+  PostRelationCount: { // field return type
+    likes: number | null; // Int
   }
   Query: { // field return type
     me: NexusGenRootTypes['MeResponseType']; // MeResponseType!
@@ -269,8 +304,10 @@ export interface NexusGenFieldTypeNames {
     createPost: 'CreatePostMutation'
     login: 'LoginResponseType'
     signup: 'SignupResponseType'
+    togglePostLike: 'PostLikeMutation'
   }
   Post: { // field return type name
+    _count: 'PostRelationCount'
     audience: 'PostAudienceEnum'
     author: 'User'
     authorId: 'ID'
@@ -285,6 +322,22 @@ export interface NexusGenFieldTypeNames {
     taggedFriends: 'User'
     title: 'String'
     updatedAt: 'String'
+  }
+  PostLike: { // field return type name
+    createdAt: 'String'
+    post: 'Post'
+    postId: 'String'
+    user: 'User'
+    userId: 'String'
+  }
+  PostLikeEdge: { // field return type name
+    node: 'Post'
+  }
+  PostLikeMutation: { // field return type name
+    edge: 'PostLikeEdge'
+  }
+  PostRelationCount: { // field return type name
+    likes: 'Int'
   }
   Query: { // field return type name
     me: 'MeResponseType'
@@ -327,6 +380,9 @@ export interface NexusGenArgTypes {
     }
     signup: { // args
       data: NexusGenInputs['SignupInputType']; // SignupInputType!
+    }
+    togglePostLike: { // args
+      id: string; // ID!
     }
   }
   Query: {

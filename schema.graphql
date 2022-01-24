@@ -71,9 +71,11 @@ type Mutation {
   createPost(data: CreatePostInputType!): CreatePostMutation!
   login(data: LoginInputType!): LoginResponseType!
   signup(data: SignupInputType!): SignupResponseType!
+  togglePostLike(id: ID!): PostLikeMutation!
 }
 
 type Post {
+  _count: PostRelationCount!
   audience: PostAudienceEnum!
   author: User!
   authorId: ID!
@@ -96,6 +98,26 @@ enum PostAudienceEnum {
   ONLY_ME
   PUBLIC
   SPECIFIC
+}
+
+type PostLike {
+  createdAt: String!
+  post: Post!
+  postId: String!
+  user: User!
+  userId: String!
+}
+
+type PostLikeEdge {
+  node: Post!
+}
+
+type PostLikeMutation {
+  edge: PostLikeEdge!
+}
+
+type PostRelationCount {
+  likes: Int
 }
 
 type Query {

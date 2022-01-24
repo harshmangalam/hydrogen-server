@@ -1,5 +1,5 @@
-import { AuthenticationError } from "apollo-server";
-import { extendType, nonNull, stringArg } from "nexus";
+import { AuthenticationError, UserInputError } from "apollo-server";
+import { extendType, idArg, nonNull, stringArg } from "nexus";
 import { Context } from "../../context";
 
 export const PostMutation = extendType({
@@ -49,6 +49,84 @@ export const PostMutation = extendType({
           return {
             edges: {
               node: newPost,
+            },
+          };
+        } catch (error) {
+          throw error;
+        }
+      },
+    });
+
+    t.nonNull.field("togglePostLike", {
+      type: "PostLikeMutation",
+      args: {
+        id: nonNull(idArg()),
+      },
+      async resolve(_root, { id }, ctx: Context) {
+        try {
+          // find post by provided id
+          const findPost = await ctx.db.post.findUnique({
+            where: {
+              id,
+            },
+            select: {
+              id: true,
+            },
+          });
+
+          // throw error when post not found
+          if (!findPost) {
+            throw new UserInputError("Post does not exist");
+          }
+          // check if user have already like on post
+
+          const alreadyLike = await ctx.db.likeOnPost.findFirst({
+            where: {
+              userId: ctx.user.id,
+              postId: id,
+            },
+            select: {
+              id: true,
+              userId: true,
+              postId: true,
+            },
+          });
+
+          if (alreadyLike) {
+            // remove like from post
+            await ctx.db.likeOnPost.delete({
+              where: {
+                id: alreadyLike.id,
+              },
+            });
+          } else {
+            // like post
+            await ctx.db.likeOnPost.create({
+              data: {
+                postId: id,
+                userId: ctx.user.id,
+              },
+            });
+          }
+
+          // fetch updated likes post
+
+          const post = await ctx.db.post.findUnique({
+            where: {
+              id,
+            },
+            include: {
+              _count: {
+                select: {
+                  likes: true,
+                },
+              },
+            },
+          });
+
+          return {
+            edge: {
+              node: post,
             },
           };
         } catch (error) {

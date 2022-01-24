@@ -1,6 +1,27 @@
 import { Context } from "../../context";
 import { enumType, inputObjectType, objectType } from "nexus";
 
+export const PostLike = objectType({
+  name: "PostLike",
+  definition(t) {
+    t.nonNull.field("user", {
+      type: "User",
+    });
+    t.nonNull.string("userId");
+    t.nonNull.string("createdAt");
+    t.nonNull.field("post", {
+      type: "Post",
+    });
+    t.nonNull.string("postId");
+  },
+});
+
+export const PostRelationCount = objectType({
+  name: "PostRelationCount",
+  definition(t) {
+    t.int("likes");
+  },
+});
 export const Post = objectType({
   name: "Post",
   definition(t) {
@@ -16,6 +37,9 @@ export const Post = objectType({
     t.string("gif");
     t.nonNull.string("createdAt");
     t.nonNull.string("updatedAt");
+    t.nonNull.field("_count", {
+      type: "PostRelationCount",
+    });
     t.nonNull.id("authorId");
     t.nonNull.field("author", {
       type: "User",
@@ -162,6 +186,25 @@ export const FetchPostQuery = objectType({
   definition(t) {
     t.nonNull.field("edge", {
       type: "FetchPostEdge",
+    });
+  },
+});
+
+// toggle likes mutation
+
+export const PostLikeEdge = objectType({
+  name: "PostLikeEdge",
+  definition(t) {
+    t.nonNull.field("node", {
+      type: "Post",
+    });
+  },
+});
+export const PostLikeMutation = objectType({
+  name: "PostLikeMutation",
+  definition(t) {
+    t.nonNull.field("edge", {
+      type: "PostLikeEdge",
     });
   },
 });
