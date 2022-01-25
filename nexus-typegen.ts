@@ -105,13 +105,6 @@ export interface NexusGenObjects {
     title: string; // String!
     updatedAt: string; // String!
   }
-  PostLike: { // root type
-    createdAt: string; // String!
-    post: NexusGenRootTypes['Post']; // Post!
-    postId: string; // String!
-    user: NexusGenRootTypes['User']; // User!
-    userId: string; // String!
-  }
   PostLikeEdge: { // root type
     node: NexusGenRootTypes['Post']; // Post!
   }
@@ -208,19 +201,14 @@ export interface NexusGenFieldTypes {
     createdAt: string; // String!
     feeling: string | null; // String
     gif: string | null; // String
+    hasAlreadyLiked: boolean | null; // Boolean
     id: string; // ID!
     images: Array<string | null>; // [String]!
+    likes: NexusGenRootTypes['User'][]; // [User!]!
     specificAudienceFriends: NexusGenRootTypes['User'][]; // [User!]!
     taggedFriends: NexusGenRootTypes['User'][]; // [User!]!
     title: string; // String!
     updatedAt: string; // String!
-  }
-  PostLike: { // field return type
-    createdAt: string; // String!
-    post: NexusGenRootTypes['Post']; // Post!
-    postId: string; // String!
-    user: NexusGenRootTypes['User']; // User!
-    userId: string; // String!
   }
   PostLikeEdge: { // field return type
     node: NexusGenRootTypes['Post']; // Post!
@@ -316,19 +304,14 @@ export interface NexusGenFieldTypeNames {
     createdAt: 'String'
     feeling: 'String'
     gif: 'String'
+    hasAlreadyLiked: 'Boolean'
     id: 'ID'
     images: 'String'
+    likes: 'User'
     specificAudienceFriends: 'User'
     taggedFriends: 'User'
     title: 'String'
     updatedAt: 'String'
-  }
-  PostLike: { // field return type name
-    createdAt: 'String'
-    post: 'Post'
-    postId: 'String'
-    user: 'User'
-    userId: 'String'
   }
   PostLikeEdge: { // field return type name
     node: 'Post'
@@ -383,6 +366,11 @@ export interface NexusGenArgTypes {
     }
     togglePostLike: { // args
       id: string; // ID!
+    }
+  }
+  Post: {
+    likes: { // args
+      take?: number | null; // Int
     }
   }
   Query: {

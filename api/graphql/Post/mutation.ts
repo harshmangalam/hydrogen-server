@@ -77,6 +77,14 @@ export const PostMutation = extendType({
             },
             select: {
               id: true,
+              likes: {
+                where: {
+                  id: ctx.user.id,
+                },
+                select: {
+                  id: true,
+                },
+              },
             },
           });
 
@@ -86,31 +94,32 @@ export const PostMutation = extendType({
           }
           // check if user have already like on post
 
-          const alreadyLike = await ctx.db.likeOnPost.findFirst({
-            where: {
-              userId: ctx.user.id,
-              postId: id,
-            },
-            select: {
-              id: true,
-              userId: true,
-              postId: true,
-            },
-          });
-
-          if (alreadyLike) {
+          if (findPost.likes.length) {
             // remove like from post
-            await ctx.db.likeOnPost.delete({
+            await ctx.db.post.update({
               where: {
-                id: alreadyLike.id,
+                id,
+              },
+              data: {
+                likes: {
+                  disconnect: {
+                    id: ctx.user.id,
+                  },
+                },
               },
             });
           } else {
             // like post
-            await ctx.db.likeOnPost.create({
+            await ctx.db.post.update({
+              where: {
+                id,
+              },
               data: {
-                postId: id,
-                userId: ctx.user.id,
+                likes: {
+                  connect: {
+                    id: ctx.user.id,
+                  },
+                },
               },
             });
           }

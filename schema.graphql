@@ -84,8 +84,10 @@ type Post {
   createdAt: String!
   feeling: String
   gif: String
+  hasAlreadyLiked: Boolean
   id: ID!
   images: [String]!
+  likes(take: Int): [User!]!
   specificAudienceFriends: [User!]!
   taggedFriends: [User!]!
   title: String!
@@ -98,14 +100,6 @@ enum PostAudienceEnum {
   ONLY_ME
   PUBLIC
   SPECIFIC
-}
-
-type PostLike {
-  createdAt: String!
-  post: Post!
-  postId: String!
-  user: User!
-  userId: String!
 }
 
 type PostLikeEdge {

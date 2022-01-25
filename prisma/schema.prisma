@@ -11,23 +11,23 @@ datasource db {
 }
 
 model User {
-  id                      String       @id @default(uuid())
+  id                      String     @id @default(uuid())
   firstName               String
   lastName                String?
-  email                   String       @unique
+  email                   String     @unique
   password                String
   gender                  UserGender
   coverImage              String?
   profileImage            String?
-  role                    UserRole     @default(USER)
-  isActive                Boolean      @default(false)
-  isEmailVerified         Boolean      @default(false)
-  createdAt               DateTime     @default(now())
-  updatedAt               DateTime     @updatedAt
-  taggedInPosts           Post[]       @relation("_UsersPostsTag")
-  specificAudienceInPosts Post[]       @relation("_UsersPostsSpecificAudience")
+  role                    UserRole   @default(USER)
+  isActive                Boolean    @default(false)
+  isEmailVerified         Boolean    @default(false)
+  createdAt               DateTime   @default(now())
+  updatedAt               DateTime   @updatedAt
+  taggedInPosts           Post[]     @relation("_UsersPostsTag")
+  specificAudienceInPosts Post[]     @relation("_UsersPostsSpecificAudience")
   posts                   Post[]
-  likePosts               LikeOnPost[]
+  likePosts               Post[]     @relation("_UsersPostsLike")
 }
 
 model Post {
@@ -43,20 +43,9 @@ model Post {
   gif                     String?
   taggedFriends           User[]           @relation("_UsersPostsTag")
   specificAudienceFriends User[]           @relation("_UsersPostsSpecificAudience")
-  likes                   LikeOnPost[]
+  likes                   User[]           @relation("_UsersPostsLike")
   createdAt               DateTime         @default(now())
   updatedAt               DateTime         @updatedAt
-}
-
-model LikeOnPost {
-  id        String   @id @default(uuid())
-  createdAt DateTime @default(now())
-  post      Post     @relation(fields: [postId], references: [id])
-  postId    String
-
-  user   User   @relation(fields: [userId], references: [id])
-  userId String
-
 }
 
 enum PostAudienceEnum {

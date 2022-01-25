@@ -1,20 +1,5 @@
 import { Context } from "../../context";
-import { enumType, inputObjectType, objectType } from "nexus";
-
-export const PostLike = objectType({
-  name: "PostLike",
-  definition(t) {
-    t.nonNull.field("user", {
-      type: "User",
-    });
-    t.nonNull.string("userId");
-    t.nonNull.string("createdAt");
-    t.nonNull.field("post", {
-      type: "Post",
-    });
-    t.nonNull.string("postId");
-  },
-});
+import { enumType, inputObjectType, intArg, objectType } from "nexus";
 
 export const PostRelationCount = objectType({
   name: "PostRelationCount",
@@ -89,6 +74,68 @@ export const Post = objectType({
             },
           });
           return users;
+        } catch (error) {
+          throw error;
+        }
+      },
+    });
+    t.nonNull.list.nonNull.field("likes", {
+      type: "User",
+      args: {
+        take: intArg(),
+      },
+      async resolve(root, { take }, ctx: Context) {
+        try {
+          const users = await ctx.db.user.findMany({
+            where: {
+              likePosts: {
+                some: {
+                  id: root.id,
+                },
+              },
+            },
+            take: take ? take : 1,
+            select: {
+              id: true,
+              firstName: true,
+            },
+          });
+          console.log(users);
+          return users;
+        } catch (error) {
+          throw error;
+        }
+      },
+    });
+
+    t.field("hasAlreadyLiked", {
+      type: "Boolean",
+      async resolve(root, _args, ctx: Context) {
+        if (!ctx.user) {
+          return null;
+        }
+        try {
+          const alreadyLike = await ctx.db.user.findUnique({
+            where: {
+              id: ctx.user.id,
+            },
+            select: {
+              id: true,
+              likePosts: {
+                select: {
+                  id: true,
+                },
+                where: {
+                  id: root.id,
+                },
+              },
+            },
+          });
+
+          if (alreadyLike?.likePosts.length) {
+            return true;
+          }
+          return false;
         } catch (error) {
           throw error;
         }

@@ -1,7 +1,7 @@
 import { db } from "./db";
 import { PrismaClient, User } from "@prisma/client";
 import { ApolloError, AuthenticationError } from "apollo-server";
-import jwt from "jsonwebtoken";
+import jwt, { TokenExpiredError } from "jsonwebtoken";
 export interface Context {
   db: PrismaClient;
   user: User;
@@ -41,7 +41,10 @@ export const context = async ({ req }) => {
       };
     }
   } catch (error) {
-    console.log(error);
+    if (error instanceof TokenExpiredError) {
+      throw new AuthenticationError("Token  expired");
+    }
+
     throw new ApolloError("Something went wrong");
   }
 };
