@@ -1,66 +1,12 @@
 import { AuthenticationError, UserInputError } from "apollo-server";
-import { extendType, idArg, nonNull, stringArg } from "nexus";
+import { extendType, idArg, nonNull } from "nexus";
 import { Context } from "../../context";
 
-export const PostMutation = extendType({
+export const TogglePostLike = extendType({
   type: "Mutation",
   definition(t) {
-    t.nonNull.field("createPost", {
-      type: "CreatePostMutation",
-      args: {
-        data: nonNull("CreatePostInputType"),
-      },
-      async resolve(_root, args, ctx: Context) {
-        try {
-          // check for current user
-          if (!ctx.user) {
-            throw new AuthenticationError("unauthenticated");
-          }
-          // create new post
-          const newPost = await ctx.db.post.create({
-            data: {
-              title: args.data.title,
-              content: args.data.content,
-              audience: args.data.audience,
-              feeling: args.data.feeling,
-              checkIn: args.data.checkIn,
-              gif: args.data.gif,
-              images: args.data.images?.length ? args.data.images : undefined,
-              author: {
-                connect: {
-                  id: ctx.user.id,
-                },
-              },
-              taggedFriends: args.data.taggedFriends?.length
-                ? {
-                    connect: args.data.taggedFriends.map((id) => ({
-                      id,
-                    })),
-                  }
-                : undefined,
-              specificAudienceFriends: args.data.specificAudienceFriends?.length
-                ? {
-                    connect: args.data.specificAudienceFriends.map((id) => ({
-                      id,
-                    })),
-                  }
-                : undefined,
-            },
-          });
-
-          return {
-            edges: {
-              node: newPost,
-            },
-          };
-        } catch (error) {
-          throw error;
-        }
-      },
-    });
-
     t.nonNull.field("togglePostLike", {
-      type: "PostLikeMutation",
+      type: "Post",
       args: {
         id: nonNull(idArg()),
       },
@@ -68,7 +14,9 @@ export const PostMutation = extendType({
         try {
           // check for current user
           if (!ctx.user) {
-            throw new AuthenticationError("unauthenticated");
+            throw new AuthenticationError("Unauthenticated", {
+              error: "Login to like the post",
+            });
           }
           // find post by provided id
           const findPost = await ctx.db.post.findUnique({
@@ -90,7 +38,9 @@ export const PostMutation = extendType({
 
           // throw error when post not found
           if (!findPost) {
-            throw new UserInputError("Post does not exist");
+            throw new UserInputError("Not Found", {
+              error: "Post does not found",
+            });
           }
           // check if user have already like on post
 
@@ -139,11 +89,7 @@ export const PostMutation = extendType({
             },
           });
 
-          return {
-            edge: {
-              node: post,
-            },
-          };
+          return post;
         } catch (error) {
           throw error;
         }

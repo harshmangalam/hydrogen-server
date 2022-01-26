@@ -2,10 +2,6 @@
 ### Do not make changes to this file directly
 
 
-type CreatePostEdges {
-  node: Post!
-}
-
 input CreatePostInputType {
   audience: PostAudienceEnum
   checkIn: String
@@ -16,18 +12,6 @@ input CreatePostInputType {
   specificAudienceFriends: [ID]
   taggedFriends: [ID]
   title: String!
-}
-
-type CreatePostMutation {
-  edges: CreatePostEdges!
-}
-
-type FetchPostEdge {
-  node: Post!
-}
-
-type FetchPostQuery {
-  edge: FetchPostEdge!
 }
 
 type FetchPostsEdges {
@@ -68,10 +52,10 @@ type MeResponseType {
 }
 
 type Mutation {
-  createPost(data: CreatePostInputType!): CreatePostMutation!
+  createPost(data: CreatePostInputType!): Post!
   login(data: LoginInputType!): LoginResponseType!
   signup(data: SignupInputType!): SignupResponseType!
-  togglePostLike(id: ID!): PostLikeMutation!
+  togglePostLike(id: ID!): Post!
 }
 
 type Post {
@@ -102,21 +86,13 @@ enum PostAudienceEnum {
   SPECIFIC
 }
 
-type PostLikeEdge {
-  node: Post!
-}
-
-type PostLikeMutation {
-  edge: PostLikeEdge!
-}
-
 type PostRelationCount {
   likes: Int
 }
 
 type Query {
   me: MeResponseType!
-  post(id: ID!): FetchPostQuery!
+  post(id: ID!): Post!
   posts(cursor: ID, take: Int): FetchPostsQuery!
   users: [User!]!
 }

@@ -7,6 +7,8 @@ export const PostRelationCount = objectType({
     t.int("likes");
   },
 });
+
+// start post object type
 export const Post = objectType({
   name: "Post",
   definition(t) {
@@ -28,7 +30,7 @@ export const Post = objectType({
     t.nonNull.id("authorId");
     t.nonNull.field("author", {
       type: "User",
-      async resolve(root, args, ctx: Context) {
+      async resolve(root, _args, ctx: Context) {
         try {
           const user = await ctx.db.user.findUnique({
             where: {
@@ -43,7 +45,7 @@ export const Post = objectType({
     });
     t.nonNull.list.nonNull.field("specificAudienceFriends", {
       type: "User",
-      async resolve(root, args, ctx: Context) {
+      async resolve(root, _args, ctx: Context) {
         try {
           const users = await ctx.db.user.findMany({
             where: {
@@ -62,7 +64,7 @@ export const Post = objectType({
     });
     t.nonNull.list.nonNull.field("taggedFriends", {
       type: "User",
-      async resolve(root, args, ctx: Context) {
+      async resolve(root, _args, ctx: Context) {
         try {
           const users = await ctx.db.user.findMany({
             where: {
@@ -144,13 +146,18 @@ export const Post = objectType({
   },
 });
 
+// end post object type
+
+// start post audience enum
 export const PostAudienceEnum = enumType({
   name: "PostAudienceEnum",
   members: ["PUBLIC", "FRIENDS", "ONLY_ME", "SPECIFIC"],
   description: "Who can see your post",
 });
 
-// start create post type
+// end post audience enum
+
+// start create post input  type
 export const CreatePostInputType = inputObjectType({
   name: "CreatePostInputType",
   definition(t) {
@@ -168,26 +175,7 @@ export const CreatePostInputType = inputObjectType({
   },
 });
 
-export const CreatePostEdges = objectType({
-  name: "CreatePostEdges",
-  definition(t) {
-    t.nonNull.field("node", {
-      type: "Post",
-    });
-  },
-});
-
-export const CreatePostMutation = objectType({
-  name: "CreatePostMutation",
-  definition(t) {
-    t.nonNull.field("edges", {
-      type: "CreatePostEdges",
-    });
-  },
-});
-
-// end create post type
-
+// end create post input type
 // start posts query type
 export const FetchPostsEdges = objectType({
   name: "FetchPostsEdges",
@@ -217,41 +205,3 @@ export const FetchPostsQuery = objectType({
   },
 });
 // end posts query type
-
-// start post query type
-
-export const FetchPostEdge = objectType({
-  name: "FetchPostEdge",
-  definition(t) {
-    t.nonNull.field("node", {
-      type: "Post",
-    });
-  },
-});
-export const FetchPostQuery = objectType({
-  name: "FetchPostQuery",
-  definition(t) {
-    t.nonNull.field("edge", {
-      type: "FetchPostEdge",
-    });
-  },
-});
-
-// toggle likes mutation
-
-export const PostLikeEdge = objectType({
-  name: "PostLikeEdge",
-  definition(t) {
-    t.nonNull.field("node", {
-      type: "Post",
-    });
-  },
-});
-export const PostLikeMutation = objectType({
-  name: "PostLikeMutation",
-  definition(t) {
-    t.nonNull.field("edge", {
-      type: "PostLikeEdge",
-    });
-  },
-});

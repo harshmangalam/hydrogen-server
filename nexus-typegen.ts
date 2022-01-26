@@ -53,18 +53,6 @@ export interface NexusGenScalars {
 }
 
 export interface NexusGenObjects {
-  CreatePostEdges: { // root type
-    node: NexusGenRootTypes['Post']; // Post!
-  }
-  CreatePostMutation: { // root type
-    edges: NexusGenRootTypes['CreatePostEdges']; // CreatePostEdges!
-  }
-  FetchPostEdge: { // root type
-    node: NexusGenRootTypes['Post']; // Post!
-  }
-  FetchPostQuery: { // root type
-    edge: NexusGenRootTypes['FetchPostEdge']; // FetchPostEdge!
-  }
   FetchPostsEdges: { // root type
     cursor: string; // ID!
     node: NexusGenRootTypes['Post']; // Post!
@@ -105,12 +93,6 @@ export interface NexusGenObjects {
     title: string; // String!
     updatedAt: string; // String!
   }
-  PostLikeEdge: { // root type
-    node: NexusGenRootTypes['Post']; // Post!
-  }
-  PostLikeMutation: { // root type
-    edge: NexusGenRootTypes['PostLikeEdge']; // PostLikeEdge!
-  }
   PostRelationCount: { // root type
     likes?: number | null; // Int
   }
@@ -148,18 +130,6 @@ export type NexusGenRootTypes = NexusGenObjects
 export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars & NexusGenEnums
 
 export interface NexusGenFieldTypes {
-  CreatePostEdges: { // field return type
-    node: NexusGenRootTypes['Post']; // Post!
-  }
-  CreatePostMutation: { // field return type
-    edges: NexusGenRootTypes['CreatePostEdges']; // CreatePostEdges!
-  }
-  FetchPostEdge: { // field return type
-    node: NexusGenRootTypes['Post']; // Post!
-  }
-  FetchPostQuery: { // field return type
-    edge: NexusGenRootTypes['FetchPostEdge']; // FetchPostEdge!
-  }
   FetchPostsEdges: { // field return type
     cursor: string; // ID!
     node: NexusGenRootTypes['Post']; // Post!
@@ -186,10 +156,10 @@ export interface NexusGenFieldTypes {
     edges: NexusGenRootTypes['MeResponseEdgesType']; // MeResponseEdgesType!
   }
   Mutation: { // field return type
-    createPost: NexusGenRootTypes['CreatePostMutation']; // CreatePostMutation!
+    createPost: NexusGenRootTypes['Post']; // Post!
     login: NexusGenRootTypes['LoginResponseType']; // LoginResponseType!
     signup: NexusGenRootTypes['SignupResponseType']; // SignupResponseType!
-    togglePostLike: NexusGenRootTypes['PostLikeMutation']; // PostLikeMutation!
+    togglePostLike: NexusGenRootTypes['Post']; // Post!
   }
   Post: { // field return type
     _count: NexusGenRootTypes['PostRelationCount']; // PostRelationCount!
@@ -210,18 +180,12 @@ export interface NexusGenFieldTypes {
     title: string; // String!
     updatedAt: string; // String!
   }
-  PostLikeEdge: { // field return type
-    node: NexusGenRootTypes['Post']; // Post!
-  }
-  PostLikeMutation: { // field return type
-    edge: NexusGenRootTypes['PostLikeEdge']; // PostLikeEdge!
-  }
   PostRelationCount: { // field return type
     likes: number | null; // Int
   }
   Query: { // field return type
     me: NexusGenRootTypes['MeResponseType']; // MeResponseType!
-    post: NexusGenRootTypes['FetchPostQuery']; // FetchPostQuery!
+    post: NexusGenRootTypes['Post']; // Post!
     posts: NexusGenRootTypes['FetchPostsQuery']; // FetchPostsQuery!
     users: NexusGenRootTypes['User'][]; // [User!]!
   }
@@ -251,18 +215,6 @@ export interface NexusGenFieldTypes {
 }
 
 export interface NexusGenFieldTypeNames {
-  CreatePostEdges: { // field return type name
-    node: 'Post'
-  }
-  CreatePostMutation: { // field return type name
-    edges: 'CreatePostEdges'
-  }
-  FetchPostEdge: { // field return type name
-    node: 'Post'
-  }
-  FetchPostQuery: { // field return type name
-    edge: 'FetchPostEdge'
-  }
   FetchPostsEdges: { // field return type name
     cursor: 'ID'
     node: 'Post'
@@ -289,10 +241,10 @@ export interface NexusGenFieldTypeNames {
     edges: 'MeResponseEdgesType'
   }
   Mutation: { // field return type name
-    createPost: 'CreatePostMutation'
+    createPost: 'Post'
     login: 'LoginResponseType'
     signup: 'SignupResponseType'
-    togglePostLike: 'PostLikeMutation'
+    togglePostLike: 'Post'
   }
   Post: { // field return type name
     _count: 'PostRelationCount'
@@ -313,18 +265,12 @@ export interface NexusGenFieldTypeNames {
     title: 'String'
     updatedAt: 'String'
   }
-  PostLikeEdge: { // field return type name
-    node: 'Post'
-  }
-  PostLikeMutation: { // field return type name
-    edge: 'PostLikeEdge'
-  }
   PostRelationCount: { // field return type name
     likes: 'Int'
   }
   Query: { // field return type name
     me: 'MeResponseType'
-    post: 'FetchPostQuery'
+    post: 'Post'
     posts: 'FetchPostsQuery'
     users: 'User'
   }

@@ -1,8 +1,7 @@
-import { UserInputError } from "apollo-server";
-import { extendType, idArg, intArg, nonNull } from "nexus";
+import { extendType, idArg, intArg } from "nexus";
 import { Context } from "../../context";
 
-export const PostQuery = extendType({
+export const FetchPosts = extendType({
   type: "Query",
   definition(t) {
     t.nonNull.field("posts", {
@@ -42,41 +41,6 @@ export const PostQuery = extendType({
             pageInfo: {
               endCursor: nodes.length ? nodes[nodes.length - 1].id : null,
               hasNextPage,
-            },
-          };
-        } catch (error) {
-          throw error;
-        }
-      },
-    });
-    t.nonNull.field("post", {
-      type: "FetchPostQuery",
-      args: {
-        id: nonNull(idArg()),
-      },
-
-      async resolve(_root, { id }, ctx: Context) {
-        try {
-          const post = await ctx.db.post.findUnique({
-            where: {
-              id,
-            },
-            include:{
-              _count:{
-                select:{
-                  likes:true
-                }
-              }
-            }
-          });
-
-          if (!post) {
-            throw new UserInputError("Post does not exist");
-          }
-
-          return {
-            edge: {
-              node: post,
             },
           };
         } catch (error) {
