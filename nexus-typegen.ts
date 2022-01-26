@@ -25,11 +25,11 @@ export interface NexusGenInputs {
     taggedFriends?: Array<string | null> | null; // [ID]
     title: string; // String!
   }
-  LoginInputType: { // input type
+  LoginInput: { // input type
     email: string; // String!
     password: string; // String!
   }
-  SignupInputType: { // input type
+  SignupInput: { // input type
     email: string; // String!
     firstName: string; // String!
     gender: NexusGenEnums['UserGender']; // UserGender!
@@ -65,18 +65,8 @@ export interface NexusGenObjects {
     edges: NexusGenRootTypes['FetchPostsEdges'][]; // [FetchPostsEdges!]!
     pageInfo: NexusGenRootTypes['FetchPostsPageInfo']; // FetchPostsPageInfo!
   }
-  LoginResponseEdgesType: { // root type
+  LoginResponse: { // root type
     accessToken: string; // String!
-    node: NexusGenRootTypes['User']; // User!
-  }
-  LoginResponseType: { // root type
-    edges: NexusGenRootTypes['LoginResponseEdgesType']; // LoginResponseEdgesType!
-  }
-  MeResponseEdgesType: { // root type
-    node: NexusGenRootTypes['User']; // User!
-  }
-  MeResponseType: { // root type
-    edges: NexusGenRootTypes['MeResponseEdgesType']; // MeResponseEdgesType!
   }
   Mutation: {};
   Post: { // root type
@@ -97,12 +87,6 @@ export interface NexusGenObjects {
     likes?: number | null; // Int
   }
   Query: {};
-  SignupResponseEdgesType: { // root type
-    node?: NexusGenRootTypes['User'] | null; // User
-  }
-  SignupResponseType: { // root type
-    edges: NexusGenRootTypes['SignupResponseEdgesType']; // SignupResponseEdgesType!
-  }
   User: { // root type
     coverImage?: string | null; // String
     createdAt: string; // String!
@@ -142,23 +126,13 @@ export interface NexusGenFieldTypes {
     edges: NexusGenRootTypes['FetchPostsEdges'][]; // [FetchPostsEdges!]!
     pageInfo: NexusGenRootTypes['FetchPostsPageInfo']; // FetchPostsPageInfo!
   }
-  LoginResponseEdgesType: { // field return type
+  LoginResponse: { // field return type
     accessToken: string; // String!
-    node: NexusGenRootTypes['User']; // User!
-  }
-  LoginResponseType: { // field return type
-    edges: NexusGenRootTypes['LoginResponseEdgesType']; // LoginResponseEdgesType!
-  }
-  MeResponseEdgesType: { // field return type
-    node: NexusGenRootTypes['User']; // User!
-  }
-  MeResponseType: { // field return type
-    edges: NexusGenRootTypes['MeResponseEdgesType']; // MeResponseEdgesType!
   }
   Mutation: { // field return type
     createPost: NexusGenRootTypes['Post']; // Post!
-    login: NexusGenRootTypes['LoginResponseType']; // LoginResponseType!
-    signup: NexusGenRootTypes['SignupResponseType']; // SignupResponseType!
+    login: NexusGenRootTypes['LoginResponse']; // LoginResponse!
+    signup: boolean; // Boolean!
     togglePostLike: NexusGenRootTypes['Post']; // Post!
   }
   Post: { // field return type
@@ -184,16 +158,10 @@ export interface NexusGenFieldTypes {
     likes: number | null; // Int
   }
   Query: { // field return type
-    me: NexusGenRootTypes['MeResponseType']; // MeResponseType!
+    me: NexusGenRootTypes['User']; // User!
     post: NexusGenRootTypes['Post']; // Post!
     posts: NexusGenRootTypes['FetchPostsQuery']; // FetchPostsQuery!
     users: NexusGenRootTypes['User'][]; // [User!]!
-  }
-  SignupResponseEdgesType: { // field return type
-    node: NexusGenRootTypes['User'] | null; // User
-  }
-  SignupResponseType: { // field return type
-    edges: NexusGenRootTypes['SignupResponseEdgesType']; // SignupResponseEdgesType!
   }
   User: { // field return type
     coverImage: string | null; // String
@@ -227,23 +195,13 @@ export interface NexusGenFieldTypeNames {
     edges: 'FetchPostsEdges'
     pageInfo: 'FetchPostsPageInfo'
   }
-  LoginResponseEdgesType: { // field return type name
+  LoginResponse: { // field return type name
     accessToken: 'String'
-    node: 'User'
-  }
-  LoginResponseType: { // field return type name
-    edges: 'LoginResponseEdgesType'
-  }
-  MeResponseEdgesType: { // field return type name
-    node: 'User'
-  }
-  MeResponseType: { // field return type name
-    edges: 'MeResponseEdgesType'
   }
   Mutation: { // field return type name
     createPost: 'Post'
-    login: 'LoginResponseType'
-    signup: 'SignupResponseType'
+    login: 'LoginResponse'
+    signup: 'Boolean'
     togglePostLike: 'Post'
   }
   Post: { // field return type name
@@ -269,16 +227,10 @@ export interface NexusGenFieldTypeNames {
     likes: 'Int'
   }
   Query: { // field return type name
-    me: 'MeResponseType'
+    me: 'User'
     post: 'Post'
     posts: 'FetchPostsQuery'
     users: 'User'
-  }
-  SignupResponseEdgesType: { // field return type name
-    node: 'User'
-  }
-  SignupResponseType: { // field return type name
-    edges: 'SignupResponseEdgesType'
   }
   User: { // field return type name
     coverImage: 'String'
@@ -305,10 +257,10 @@ export interface NexusGenArgTypes {
       data: NexusGenInputs['CreatePostInputType']; // CreatePostInputType!
     }
     login: { // args
-      data: NexusGenInputs['LoginInputType']; // LoginInputType!
+      data: NexusGenInputs['LoginInput']; // LoginInput!
     }
     signup: { // args
-      data: NexusGenInputs['SignupInputType']; // SignupInputType!
+      data: NexusGenInputs['SignupInput']; // SignupInput!
     }
     togglePostLike: { // args
       id: string; // ID!

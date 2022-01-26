@@ -29,32 +29,19 @@ type FetchPostsQuery {
   pageInfo: FetchPostsPageInfo!
 }
 
-input LoginInputType {
+input LoginInput {
   email: String!
   password: String!
 }
 
-type LoginResponseEdgesType {
+type LoginResponse {
   accessToken: String!
-  node: User!
-}
-
-type LoginResponseType {
-  edges: LoginResponseEdgesType!
-}
-
-type MeResponseEdgesType {
-  node: User!
-}
-
-type MeResponseType {
-  edges: MeResponseEdgesType!
 }
 
 type Mutation {
   createPost(data: CreatePostInputType!): Post!
-  login(data: LoginInputType!): LoginResponseType!
-  signup(data: SignupInputType!): SignupResponseType!
+  login(data: LoginInput!): LoginResponse!
+  signup(data: SignupInput!): Boolean!
   togglePostLike(id: ID!): Post!
 }
 
@@ -91,26 +78,18 @@ type PostRelationCount {
 }
 
 type Query {
-  me: MeResponseType!
+  me: User!
   post(id: ID!): Post!
   posts(cursor: ID, take: Int): FetchPostsQuery!
   users: [User!]!
 }
 
-input SignupInputType {
+input SignupInput {
   email: String!
   firstName: String!
   gender: UserGender!
   lastName: String
   password: String!
-}
-
-type SignupResponseEdgesType {
-  node: User
-}
-
-type SignupResponseType {
-  edges: SignupResponseEdgesType!
 }
 
 type User {

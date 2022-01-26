@@ -1,8 +1,8 @@
 import { inputObjectType, objectType } from "nexus";
 
-// signup input type
-export const SignupInputType = inputObjectType({
-  name: "SignupInputType",
+// start signup input type
+export const SignupInput = inputObjectType({
+  name: "SignupInput",
   definition(t) {
     t.nonNull.string("firstName");
     t.string("lastName");
@@ -14,75 +14,26 @@ export const SignupInputType = inputObjectType({
   },
 });
 
-// signup response nodes type
-export const SignupResponseEdgesType = objectType({
-  name: "SignupResponseEdgesType",
-  definition(t) {
-    t.field("node", {
-      type: "User",
-    });
-  },
-});
+// end signup input type
 
-// signup response type
-export const SignupResponseType = objectType({
-  name: "SignupResponseType",
-  definition(t) {
-    t.nonNull.field("edges", {
-      type: "SignupResponseEdgesType",
-    });
-  },
-});
+// start login input type
 
-// login input type
-
-export const LoginInputType = inputObjectType({
-  name: "LoginInputType",
+export const LoginInput = inputObjectType({
+  name: "LoginInput",
   definition(t) {
     t.nonNull.string("email");
     t.nonNull.string("password");
   },
 });
 
-// login response nodes type
+// end login input type
 
-export const LoginResponseEdgesType = objectType({
-  name: "LoginResponseEdgesType",
+// start login response type
+export const LoginResponse = objectType({
+  name: "LoginResponse",
   definition(t) {
     t.nonNull.string("accessToken");
-    t.nonNull.field("node", {
-      type: "User",
-    });
   },
 });
 
-// login response type
-export const LoginResponseType = objectType({
-  name: "LoginResponseType",
-  definition(t) {
-    t.nonNull.field("edges", {
-      type: "LoginResponseEdgesType",
-    });
-  },
-});
-
-// me response nodes type
-
-export const MeResponseEdgesType = objectType({
-  name: "MeResponseEdgesType",
-  definition(t) {
-    t.nonNull.field("node", {
-      type: "User",
-    });
-  },
-});
-// me response type
-
-export const MeResponseType = objectType({
-  name: "MeResponseType",
-  definition(t) {
-    t.nonNull.field("edges", {
-      type: "MeResponseEdgesType",
-    });
-  },
-});
+// end login response type

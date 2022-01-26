@@ -2,11 +2,11 @@ import { Context } from "../../context";
 import { extendType } from "nexus";
 import { AuthenticationError } from "apollo-server";
 
-export const AuthQuery = extendType({
+export const FetchMe = extendType({
   type: "Query",
   definition(t) {
     t.nonNull.field("me", {
-      type: "MeResponseType",
+      type: "User",
       async resolve(_, __, ctx: Context) {
         try {
           if (!ctx.user) {
@@ -19,11 +19,7 @@ export const AuthQuery = extendType({
             },
           });
 
-          return {
-            edges: {
-              node: user,
-            },
-          };
+          return user;
         } catch (error) {
           throw error;
         }
